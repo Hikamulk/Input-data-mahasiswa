@@ -1,60 +1,71 @@
 package modul1_202357201055;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 public class Modul1_202357201055 {
     public static void main(String[] args) {
-        // Inisialisai Array untuk menyimpan data mahasiswa
-        String[][] dataMahasiswa = new String[3][4]; // Menggunakan array 2 dimensi dengan 3 baris dan 4 kolom
+        int data[][] = {{4, 6, 4, 2, 8, 4, 2, 10}, {4, 6, 4, 2, 8, 4, 2, 10}};
+        // Menampilkan array
+        System.out.println("Array Awal:");
+        printArray(data);
         
-        // Input data mahasiswa
-        inputDataMahasiswa(dataMahasiswa);
+        // Menghitung nilai rata-rata array
+        double average = calculateAverage(data);
+        System.out.println("\nRata-rata array: " + average);
         
-        // Menampilkan data mahasiswa beserta predikat
-        tampilkanDataMahasiswa(dataMahasiswa);
+        // Pencarian posisi index dari elemen array dan pertukaran nilai
+        searchAndReplace(data);
+        
+        // Menampilkan array setelah pertukaran nilai
+        System.out.println("\nArray Setelah Pertukaran:");
+        printArray(data);
+        
+        // Menjumlahkan semua elemen yang memiliki indeks kolom ganjil
+        int sumOddColumn = sumOfOddColumns(data);
+        System.out.println("\nJumlah elemen pada kolom ganjil: " + sumOddColumn);
     }
     
-    // Method untuk menginput data mahasiswa
-    public static void inputDataMahasiswa(String[][] data) {
-        Scanner scanner = new Scanner(System.in);
-        
-        for (int i = 0; i < data.length; i++) {
-            System.out.println("Masukkan data untuk mahasiswa ke-" + (i + 1));
-            System.out.print("Nama: ");
-            data[i][0] = scanner.nextLine();
-            System.out.print("Program Studi: ");
-            data[i][1] = scanner.nextLine();
-            System.out.print("Nilai: ");
-            data[i][2] = scanner.nextLine();
+    // Method untuk menampilkan array
+    public static void printArray(int[][] arr) {
+        for (int[] row : arr) {
+            for (int num : row) {
+                System.out.print(num + " ");
+            }
+            System.out.println();
         }
-        
-        scanner.close();
     }
     
-    // Method untuk menampilkan data mahasiswa beserta predikat
-    public static void tampilkanDataMahasiswa(String[][] data) {
-        System.out.println("\nData Mahasiswa:");
-        System.out.println("--------------------------------------------------------");
-        System.out.println("| No | Nama            | Program Studi | Nilai | Predikat |");
-        System.out.println("--------------------------------------------------------");
-        
-        for (int i = 0; i < data.length; i++) {
-            System.out.printf("|%-2d|%-15s|%-13s|%-5s|%-8s|\n", (i + 1),data[i][0],data[i][1],data[i][2],hitungPredikat(data[i][2]));
+    // Method untuk menghitung rata-rata array
+    public static double calculateAverage(int[][] arr) {
+        int sum = 0;
+        int count = 0;
+        for (int[] row : arr) {
+            for (int num : row) {
+                sum += num;
+                count++;
+            }
         }
-        
-        System.out.println("--------------------------------------------------------");
+        return (double) sum / count;
     }
     
-    // Method untuk menghitung predikat berdasarkan nilai
-    public static String hitungPredikat(String nilai) {
-        double nilaiAngka = Double.parseDouble(nilai);
-        
-        if (nilaiAngka >= 80) {
-            return "A";
-        } else if (nilaiAngka >= 70) {
-            return "B";
-        } else if (nilaiAngka >= 60) {
-            return "C";
-        } else {
-            return "D";
+    // Method untuk mencari posisi index dari elemen array dan pertukaran nilai
+    public static void searchAndReplace(int[][] arr) {
+        for (int a = 0; a < arr.length; a++) {
+            for (int b = 0; b < arr[a].length; b++) {
+                int newValue = Integer.parseInt(JOptionPane.showInputDialog("Masukkan nilai baru untuk posisi [" + a + "][" + b + "]: "));
+                arr[a][b] = newValue;
+            }
         }
+    }
+    
+    // Method untuk menjumlahkan semua elemen yang memiliki indeks kolom ganjil
+    public static int sumOfOddColumns(int[][] arr) {
+        int sum = 0;
+        for (int a = 0; a < arr.length; a++) {
+            for (int b = 0; b < arr[a].length; b++) {
+                if (b % 2 != 0) { // Kolom ganjil
+                    sum += arr[a][b];
+                }
+            }
+        }
+        return sum;
     }
 }
